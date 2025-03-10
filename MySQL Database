@@ -1,0 +1,118 @@
+Please Create a database called BSUCleanUp. 
+// Table #1 for usernames, and passwords to sign up to volunteer. 
+mysql> INSERT INTO studentsCredentials (username, password) VALUES
+    ->     ('Kjones', 'newPassword1'),
+    ->     ('Esmith', 'newPassword2'),
+    ->     ('Dwilliams', 'newPassword3'),
+    ->     ('Acaldwell', 'newPassword4'),
+    ->     ('Rlewis', 'newPassword5'),
+    ->     ('JFlacco', 'newPassword6'),
+    ->     ('Spippen', 'newPassword7'),
+    ->     ('Cpaul', 'newPassword8'),
+    ->     ('Aiverson', 'newPassword9'),
+    ->     ('Nuzamaki', 'newPassword10'),
+    ->     ('Suchiha', 'newPassword11'),
+    ->     ('Cweezer', 'newPassword12'),
+    ->     ('Jneutron', 'newPassword13'),
+    ->     ('Pferb', 'newPassword14'),
+    ->     ('Dbrooks', 'newPassword15'),
+    ->     ('Jpatrick', 'newPassword16'),
+    ->     ('Jbutler', 'newPassword17'),
+    ->     ('Hjohnson', 'newPassword18'),
+    ->     ('Lhopkins', 'newPassword19'),
+    ->     ('LebronJ', 'newPassword20');
+Query OK, 20 rows affected (0.03 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+
+// next is the students Info table 
+
+mysql> CREATE TABLE studentsInfo (
+    -> studentID INT PRIMARY KEY NOT NULL,
+    -> firstName VARCHAR(50) NOT NULL,
+    -> lastName VARCHAR(50) NOT NULL,
+    -> userID INT UNIQUE NOT NULL
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+// next is the students info table with Values 
+mysql> INSERT INTO studentsInfo (studentID, firstName, lastName, userID) VALUES
+    ->     (1, 'Kyle', 'Jones', 1),
+    ->     (2, 'Eric', 'Smith', 2),
+    ->     (3, 'Derrick', 'Williams', 3),
+    ->     (4, 'Anthony', 'Caldwell', 4),
+    ->     (5, 'Ray', 'Lewis', 5),
+    ->     (6, 'James', 'Flacco', 6),
+    ->     (7, 'Scottie', 'Pippen', 7),
+    ->     (8, 'Chris', 'Paul', 8),
+    ->     (9, 'Allen', 'Iverson', 9),
+    ->     (10, 'Naruto', 'Uzamaki', 10),
+    ->     (11, 'Sasuke', 'Uchiha', 11),
+    ->     (12, 'Carl', 'Weezer', 12),
+    ->     (13, 'Jimmy', 'Neutron', 13),
+    ->     (14, 'Phineas', 'Ferb', 14),
+    ->     (15, 'Dillon', 'Brooks', 15),
+    ->     (16, 'James', 'Patrick', 16),
+    ->     (17, 'Jerrod', 'Butler', 17),
+    ->     (18, 'Harry', 'Johnson', 18),
+    ->     (19, 'Larry', 'Hopkins', 19),
+    ->     (20, 'Lebron', 'James', 20);
+Query OK, 20 rows affected (0.02 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+
+// Table for volunteered events
+mysql> CREATE TABLE eventsAvailable (
+    -> eventID INT AUTO_INCREMENT PRIMARY KEY,
+    -> eventDate DATE NOT NULL,
+    -> eventName VARCHAR(100) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO eventsAvailable (eventDate, eventName) VALUES
+    -> ('2025-09-01','Fall Clean Up'),
+    -> ('2025-10-01','HomeComing Clean Up'),
+    -> ('2025-11-01','Campus Wide Clean Up');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE volunteerTracking (
+    ->     studentID INT,
+    ->     eventID INT,
+    ->     PRIMARY KEY (studentID, eventID),
+    ->     FOREIGN KEY (studentID) REFERENCES studentsInfo(studentId),
+    ->     FOREIGN KEY (eventID) REFERENCES eventsAvailable(eventId)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> -- Table for rewards or incentives
+mysql> CREATE TABLE incentives;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> CREATE TABLE incentives
+    -> ( incentiveID INT AUTO_INCREMENT PRIMARY KEY,
+    -> studentID INT,
+    -> incentiveType VARCHAR(255),
+    -> promoCode VARCHAR(255),
+    -> FOREIGN KEY (studentID) REFERENCES studentsInfo (studentId)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> -- Students who volunteer have received these rewards
+mysql> INSERT INTO incentives (studentID, incentiveType, promoCode) VALUES
+    -> (0001, ' Free Meal','Food111'),
+    -> (0002, ' BSU Shirt', 'TShirt2789'),
+    -> (0003, 'Free Event Ticket', 'Event543'),
+    -> (0004, 'BSU Merch','Merch46353'),
+    -> (0005,' Free Event Ticket','Event3526'),
+    -> (0006,'Free Meal','Food37363'),
+    -> (0007, 'Free Meal','Food2833'),
+    -> (0008, 'Free Event Ticket','Event7353'),
+    -> (0009, 'Free Merch','Merch3738'),
+    -> (0010,'BSU Shirt','TSHIRT0872');
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+
+
