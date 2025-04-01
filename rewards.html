@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Available Rewards</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <header>
+    <img src="/static/images/school-logo.png" alt="School Logo">
+    <h1>Rewards</h1>
+    <nav>
+      <a href="/logout">Logout</a> |
+      <a href="/events">Events</a>
+    </nav>
+  </header>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  <div id="rewards-list">
+    {% for reward in rewards %}
+      <div class="reward">
+        <h3>{{ reward.name }}</h3>
+        <p>Points Required: {{ reward.points_required }}</p>
+        <form action="/rewards" method="POST">
+          <input type="hidden" name="reward_id" value="{{ reward.id }}">
+          <button type="submit">Redeem</button>
+        </form>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>
