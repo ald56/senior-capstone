@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Volunteer Events</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <header>
+    <img src="/static/Images/Capstone picture.png" alt="School Logo">
+    <h1>Volunteer Events</h1>
+    <nav>
+      <a href="/logout">Logout</a> |
+      <a href="/rewards">Rewards</a>
+    </nav>
+  </header>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  <div id="events-list">
+    {% for event in events %}
+      <div class="event">
+        <h3>{{ event.name }}</h3>
+        <p>Max: {{ event.max_participants }} | Current: {{ event.current_participants }}</p>
+        <form action="/events" method="POST">
+          <input type="hidden" name="event_id" value="{{ event.id }}">
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>
