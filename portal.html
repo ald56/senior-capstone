@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Portal</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <header>
+        <img src="/static/Images/Capstone picture.png" alt="School Logo">
+        <h1>Welcome to the Volunteer Portal</h1>
+    </header>
+    <main>
+        <p>Choose where you'd like to go:</p>
+        <ul>
+            <a href="{{ url_for('events') }}"></a><button> events</button></a>
+            <li><a href="{{ url_for('rewards') }}">Rewards</a></li>
+        </ul>
+    </main>
+</body>
+</html>
