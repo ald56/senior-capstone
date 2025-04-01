@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manager Dashboard</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <header>
+    <img src="/static/images/school-logo.png" alt="School Logo">
+    <h1>Manager Dashboard</h1>
+    <nav>
+      <a href="/manager-logout">Logout</a>
+    </nav>
+  </header>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  <section class="manager-section">
+    <h2>Add New Event</h2>
+    <form action="/manager" method="POST">
+      <label for="event_name">Event Name:</label>
+      <input type="text" id="event_name" name="event_name" required><br>
+      <label for="max_participants">Max Participants:</label>
+      <input type="number" id="max_participants" name="max_participants" required><br>
+      <button type="submit">Add Event</button>
+    </form>
+  </section>
+  <section class="manager-section">
+    <h2>Add New Reward</h2>
+    <form action="/manager" method="POST">
+      <label for="reward_name">Reward Name:</label>
+      <input type="text" id="reward_name" name="reward_name" required><br>
+      <label for="points_required">Points Required:</label>
+      <input type="number" id="points_required" name="points_required" required><br>
+      <button type="submit">Add Reward</button>
+    </form>
+  </section>
+  <section class="manager-section">
+    <h2>Current Events</h2>
+    <ul>
+      {% for event in events %}
+        <li>{{ event.name }}: {{ event.current_participants }}/{{ event.max_participants }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  <section class="manager-section">
+    <h2>Current Rewards</h2>
+    <ul>
+      {% for reward in rewards %}
+        <li>{{ reward.name }}: {{ reward.points_required }} points</li>
+      {% endfor %}
+    </ul>
+  </section>
+</body>
+</html>
