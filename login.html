@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Login</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <header>
+    <img src="/static/Images/Capstone picture.png" alt="School Logo">
+    <h1>Bowie State Volunteer</h1>
+  </header>
+  
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  
+  <form action="{{ url_for('login') }}" method="POST">  <!-- Dynamically use url_for for routing -->
+    <label for="school_id">School ID:</label>
+    <input type="text" id="school_id" name="school_id" required><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
+
+    <button type="submit">Log In</button>
+  </form>
+  <br>
+  <a href="{{ url_for('signup') }}"><button>Sign Up</button></a>  <!-- Use url_for for signup page -->
+  <!-- Remove Manager Login Button from Student Login page -->
+</body>
+</html>
