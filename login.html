@@ -1,37 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>User Login</title>
-  <link rel="stylesheet" href="/static/css/styles.css">
-</head>
-<body>
-  <header>
-    <img src="/static/Images/Capstone picture.png" alt="School Logo">
-    <h1>Bowie State Volunteer</h1>
-  </header>
-  
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul class="flashes">
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-  
-  <form action="{{ url_for('login') }}" method="POST">  <!-- Dynamically use url_for for routing -->
-    <label for="school_id">School ID:</label>
-    <input type="text" id="school_id" name="school_id" required><br>
+{% extends 'base.html' %}
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br>
+{% block title %}Student Login | Bowie Volunteer{% endblock %}
 
-    <button type="submit">Log In</button>
-  </form>
-  <br>
-  <a href="{{ url_for('signup') }}"><button>Sign Up</button></a>  <!-- Use url_for for signup page -->
-  <!-- Remove Manager Login Button from Student Login page -->
-</body>
-</html>
+{% block content %}
+<section class="d-flex justify-content-center align-items-center" style="min-height: 90vh; background: linear-gradient(to bottom right, #121212, #1f1f1f);">
+  <div class="card shadow-lg p-5 border-0" style="background-color: #1a1a1a; max-width: 420px; width: 100%;">
+    <h2 class="text-warning fw-bold text-center mb-4">Student Login</h2>
+
+    <form method="POST" action="{{ url_for('login') }}">
+      <div class="form-group mb-3">
+        <label class="form-label text-light" for="school_id">School ID</label>
+        <input type="text" class="form-control bg-dark text-light border-secondary" name="school_id" id="school_id" required>
+      </div>
+      <div class="form-group mb-4">
+        <label class="form-label text-light" for="password">Password</label>
+        <input type="password" class="form-control bg-dark text-light border-secondary" name="password" id="password" required>
+      </div>
+
+      <button type="submit" class="btn btn-warning w-100 fw-bold py-2">Log In</button>
+    </form>
+
+    <p class="text-center mt-3 text-muted" style="font-size: 0.9rem;">
+      Don’t have an account? <a href="{{ url_for('signup') }}" class="text-warning">Create one here</a>.
+    </p>
+  </div>
+</section>
+{% endblock %}
+
+  
