@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile | Bowie Volunteer{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+  <div class="text-center mb-5">
+    <h1 class="text-warning fw-bold">Edit Your Profile</h1>
+  </div>
+
+  <form method="POST" class="text-center">
+    <h5 class="text-light mb-4">Select an Avatar</h5>
+    <div class="d-flex justify-content-center flex-wrap gap-4">
+      {% for avatar in avatars %}
+        <label>
+          <input type="radio" name="avatar" value="{{ avatar }}" {% if student.avatar == avatar %}checked{% endif %} hidden>
+          <img src="{{ url_for('static', filename='avatars/' ~ avatar) }}"
+               alt="{{ avatar }}" width="100" height="100"
+               class="rounded-circle border {% if student.avatar == avatar %}border-warning border-4{% else %}border-secondary{% endif %}">
+        </label>
+      {% endfor %}
+    </div>
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-warning px-4">Save Changes</button>
+      <a href="{{ url_for('portal') }}" class="btn btn-outline-light ms-3">← Back to Dashboard</a>
+    </div>
+  </form>
+</section>
+{% endblock %}
