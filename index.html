@@ -1,26 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bowie School Volunteer Program - Login</title>
-  <link rel="stylesheet" href="/static/css/styles.css">
-</head>
-<body>
-  <header>
-    <img src="Capstone picture.png" alt="School Logo">
-    <h1>Student Login</h1>
-  </header>
-  <form action="/login" method="POST" id="login-form">
-    <label for="school_id">School ID:</label>
-    <input type="text" id="school_id" name="school_id" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <button type="submit">Login</button>
-  </form>
-  <p>Don't have an account? <a href="/signup">Sign up here</a>.</p>
-  <script src="/static/js/index.js"></script>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Welcome | Bowie Volunteer Portal{% endblock %}
+
+{% block content %}
+<section class="d-flex flex-column justify-content-center align-items-center text-center" style="min-height: 90vh; background: linear-gradient(to bottom right, #101010, #1c1c1c);">
+  <div>
+    <h1 class="text-warning fw-bold display-4">Bowie Volunteer Portal</h1>
+    <p class="text-light fs-5 mt-3">Track your service. Earn points. Make an impact.</p>
+
+    <div class="mt-4 d-flex flex-wrap justify-content-center gap-3">
+      <a href="{{ url_for('login') }}" class="btn btn-warning fw-bold px-4 py-2">Student Login</a>
+      <a href="{{ url_for('signup') }}" class="btn btn-outline-warning fw-semibold px-4 py-2">Sign Up</a>
+      <a href="{{ url_for('manager_login') }}" class="btn btn-dark border border-warning text-warning fw-semibold px-4 py-2">Manager Login</a>
+    </div>
+
+    <!-- Placeholder for optional hero image -->
+    <div class="mt-5">
+      <img src="{{ url_for('static', filename='Images/hero-placeholder.png') }}" alt="Volunteer Hero" class="img-fluid" style="max-height: 300px;">
+    </div>
+  </div>
+</section>
+{% endblock %}
