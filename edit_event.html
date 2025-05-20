@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Event | Bowie Volunteer{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h1 class="text-warning fw-bold mb-4">Edit Event</h1>
+
+  <form method="POST" class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label text-light">Event Name</label>
+      <input type="text" name="event_name" value="{{ event.name }}" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label text-light">Max Participants</label>
+      <input type="number" name="max_participants" value="{{ event.max_participants }}" class="form-control" required>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label text-light">Event Date</label>
+      <input type="date" name="event_date" value="{{ event.date }}" class="form-control" required>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label text-light">Start Time</label>
+      <input type="time" name="start_time" value="{{ event.start_time }}" class="form-control" required>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label text-light">End Time</label>
+      <input type="time" name="end_time" value="{{ event.end_time }}" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label text-light">Points</label>
+      <input type="number" name="points" value="{{ event.points }}" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label text-light">Location (optional)</label>
+      <input type="text" name="location" value="{{ event.location or '' }}" class="form-control">
+    </div>
+
+    <div class="col-12">
+      <label class="form-label text-light">Notes (optional)</label>
+      <textarea name="notes" class="form-control" rows="3">{{ event.notes or '' }}</textarea>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-warning">Save Changes</button>
+      <a href="{{ url_for('manager_page') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
