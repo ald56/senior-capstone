@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Student Detail | Bowie Volunteer{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="text-warning">Student Detail</h2>
+  
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert alert-info">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <p class="text-light"><strong>Name:</strong> {{ student.first_name }} {{ student.last_name }}</p>
+  <p class="text-light"><strong>School ID:</strong> {{ student.school_id }}</p>
+  <p class="text-light"><strong>Points:</strong> {{ student.points }}</p>
+  <p class="text-light"><strong>Events Signed Up For:</strong> {{ events | join(', ') }}</p>
+
+  <hr class="text-light">
+
+  <h4 class="text-warning">Add Points</h4>
+  <form method="POST" class="row g-3">
+    <div class="col-md-4">
+      <input type="number" name="points_to_add" class="form-control" placeholder="Points to add" required>
+    </div>
+    <div class="col-md-4">
+      <button type="submit" class="btn btn-outline-warning">Add Points</button>
+    </div>
+  </form>
+
+  <a href="{{ url_for('view_students') }}" class="btn btn-outline-light mt-4">← Back to Student List</a>
+</div>
+{% endblock %}
