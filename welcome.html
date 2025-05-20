@@ -1,12 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Bowie Volunteer Portal</title>
-</head>
-<body style="background-color: black; color: gold; text-align: center;">
-    <h1>Welcome to the Bowie Volunteer Portal</h1>
-    <a href="/login"><button>Log In</button></a>
-    <a href="/signup"><button>Sign Up</button></a>
-    <a href="/manager-login"><button>Manager Log In</button></a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Bowie Volunteer Portal{% endblock %}
+
+{% block content %}
+<section class="hero-section text-light d-flex align-items-center justify-content-center" style="min-height: 90vh; background: linear-gradient(to right, #0d0d0d, #1a1a1a);">
+  <div class="text-center px-4">
+    <!-- TODO: Add school crest or animated SVG background later -->
+    <h1 class="display-2 fw-bold text-warning mb-3">Welcome to the Bowie Volunteer Portal</h1>
+    <p class="lead text-light mb-4">Track your hours. Redeem rewards. Lead your community.</p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <a href="{{ url_for('login') }}" class="btn btn-lg btn-warning text-dark fw-semibold px-5 py-2">Student Login</a>
+      <a href="{{ url_for('signup') }}" class="btn btn-lg btn-outline-light fw-semibold px-5 py-2">Sign Up</a>
+      <a href="{{ url_for('manager_login') }}" class="btn btn-lg btn-secondary fw-semibold px-5 py-2">Manager Login</a>
+    </div>
+    <!-- TODO: Add inspiring image or quote below -->
+    <p class="mt-5 text-muted fst-italic" style="font-size: 0.9rem;">“Leadership is not about titles, it's about impact.”</p>
+  </div>
+</section>
+{% endblock %}
+
