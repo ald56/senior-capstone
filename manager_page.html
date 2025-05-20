@@ -1,62 +1,147 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Manager Dashboard</title>
-  <link rel="stylesheet" href="/static/css/styles.css">
-</head>
-<body>
-  <header>
-    <img src="/static/images/school-logo.png" alt="School Logo">
-    <h1>Manager Dashboard</h1>
-    <nav>
-      <a href="/manager-logout">Logout</a>
-    </nav>
-  </header>
+{% extends 'base.html' %}
+
+{% block title %}Manager Dashboard | Bowie Volunteer{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h1 class="text-warning mb-4 fw-bold">Manager Dashboard</h1>
+
   {% with messages = get_flashed_messages() %}
     {% if messages %}
-      <ul class="flashes">
+      <div class="alert alert-info">
         {% for message in messages %}
-          <li>{{ message }}</li>
+          <div>{{ message }}</div>
         {% endfor %}
-      </ul>
+      </div>
     {% endif %}
   {% endwith %}
-  <section class="manager-section">
-    <h2>Add New Event</h2>
-    <form action="/manager" method="POST">
-      <label for="event_name">Event Name:</label>
-      <input type="text" id="event_name" name="event_name" required><br>
-      <label for="max_participants">Max Participants:</label>
-      <input type="number" id="max_participants" name="max_participants" required><br>
-      <button type="submit">Add Event</button>
+
+  <!-- Add Event Form -->
+  <div class="mb-5">
+    <h2 class="text-light">Add New Event</h2>
+    <form method="POST" class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label text-light">Event Name</label>
+        <input type="text" name="event_name" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label text-light">Max Participants</label>
+        <input type="number" name="max_participants" class="form-control" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label text-light">Event Date</label>
+        <input type="date" name="event_date" class="form-control" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label text-light">Start Time</label>
+        <input type="time" name="start_time" class="form-control" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label text-light">End Time</label>
+        <input type="time" name="end_time" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label text-light">Points for Participation</label>
+        <input type="number" name="points" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label text-light">Location (optional)</label>
+        <input type="text" name="location" class="form-control" placeholder="e.g., Gym, Room 202, Front Lawn">
+      </div>
+      <div class="col-12">
+        <label class="form-label text-light">Notes (optional)</label>
+        <textarea name="notes" class="form-control" rows="3" placeholder="Add special instructions or notes about this event"></textarea>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-warning">Add Event</button>
+      </div>
     </form>
-  </section>
-  <section class="manager-section">
-    <h2>Add New Reward</h2>
-    <form action="/manager" method="POST">
-      <label for="reward_name">Reward Name:</label>
-      <input type="text" id="reward_name" name="reward_name" required><br>
-      <label for="points_required">Points Required:</label>
-      <input type="number" id="points_required" name="points_required" required><br>
-      <button type="submit">Add Reward</button>
+  </div>
+
+  <!-- Add Reward Form -->
+  <div class="mb-5">
+    <h2 class="text-light">Add New Reward</h2>
+    <form method="POST" class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label text-light">Reward Name</label>
+        <input type="text" name="reward_name" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label text-light">Points Required</label>
+        <input type="number" name="points_required" class="form-control" required>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-warning">Add Reward</button>
+      </div>
     </form>
-  </section>
-  <section class="manager-section">
-    <h2>Current Events</h2>
-    <ul>
-      {% for event in events %}
-        <li>{{ event.name }}: {{ event.current_participants }}/{{ event.max_participants }}</li>
-      {% endfor %}
-    </ul>
-  </section>
-  <section class="manager-section">
-    <h2>Current Rewards</h2>
-    <ul>
-      {% for reward in rewards %}
-        <li>{{ reward.name }}: {{ reward.points_required }} points</li>
-      {% endfor %}
-    </ul>
-  </section>
-</body>
-</html>
+  </div>
+
+  <!-- Events Table -->
+  <div class="mb-5">
+    <h2 class="text-light">Current Events</h2>
+    {% if events %}
+      <table class="table table-dark table-striped table-bordered align-middle">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Participants</th>
+            <th>Points</th>
+            <th>Notes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for event in events %}
+            <tr>
+              <td>{{ event.name }}</td>
+              <td>{{ event.date }}</td>
+              <td>{{ event.start_time }} - {{ event.end_time }}</td>
+              <td>{{ event.current_participants }} / {{ event.max_participants }}</td>
+              <td>{{ event.points }}</td>
+              <td>{{ event.notes or '—' }}</td>
+              <td>
+                <form method="POST" action="{{ url_for('delete_event', event_id=event.id) }}" style="display:inline-block;">
+                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+                <a href="{{ url_for('edit_event', event_id=event.id) }}" class="btn btn-sm btn-secondary">Edit</a>
+                <a href="{{ url_for('view_signups', event_id=event.id) }}" class="btn btn-sm btn-info">View Signups</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="text-muted">No events created yet.</p>
+    {% endif %}
+  </div>
+
+  <!-- Rewards Table -->
+  <div>
+    <h2 class="text-light">Current Rewards</h2>
+    {% if rewards %}
+      <table class="table table-dark table-striped table-bordered align-middle">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Points Required</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reward in rewards %}
+            <tr>
+              <td>{{ reward.name }}</td>
+              <td>{{ reward.points_required }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="text-muted">No rewards added yet.</p>
+    {% endif %}
+  </div>
+  <a href="{{ url_for('view_students') }}" class="btn btn-outline-warning mb-4">View All Students</a>
+
+</div>
+{% endblock %}
